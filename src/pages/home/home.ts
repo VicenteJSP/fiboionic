@@ -1,12 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the HomePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { IonicPage } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -15,11 +8,40 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  resultados: Array<Resultado>;
+
+  constructor() { this.borrarResultados() }
+
+  generarFibonacci(numero: number) {
+    this.resultados.push({ numero, resultado: this.fibonacci(numero), tipo: 'Fibonacci' })
+  }
+  generarFactorial(numero: number) {
+    this.resultados.push({ numero, resultado: this.factorial(numero), tipo: 'Factorial' })
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad HomePage');
+  fibonacci(n: number): number {
+    n = Number(n);
+    if (n < 2) {
+      return n
+    } else {
+      return this.fibonacci(n - 1) + this.fibonacci(n - 2)
+    }
   }
 
+  factorial(n: number): number {
+    if (n == 0) {
+      return 1
+    } else {
+      return Number(n) * this.factorial(n - 1)
+    }
+  }
+
+  borrarResultados() { this.resultados = [] }
+
+}
+
+interface Resultado {
+  numero: number;
+  resultado: number;
+  tipo: 'Fibonacci' | 'Factorial';
 }
